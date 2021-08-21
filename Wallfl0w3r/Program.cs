@@ -26,13 +26,14 @@ namespace Wallfl0w3r
 
         private static void fsw_created(object sender, FileSystemEventArgs e)
         {
-
-            Console.WriteLine(e.Name+" was created in watch folder.");
+            
+            Console.WriteLine(e.Name + " was created in watch folder.");
             string extension = Path.GetExtension(e.Name).ToLower();
             if(extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp")
             {
-                Console.WriteLine("Setting wallpaper silently.");
-                Wallpaper.SilentSet(e.Name);
+                string fullPath = Path.GetFullPath(e.FullPath);
+                Console.WriteLine("Setting wallpaper silently: "+fullPath);
+                Wallpaper.SilentSet(fullPath);
             }
         }
     }
