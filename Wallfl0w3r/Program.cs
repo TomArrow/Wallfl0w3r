@@ -31,6 +31,7 @@ namespace Wallfl0w3r
             string extension = Path.GetExtension(e.Name).ToLower();
             if(extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp")
             {
+                System.Threading.Thread.Sleep(5000); // In case the image isn't fully written yet? Give it time.
                 string fullPath = Path.GetFullPath(e.FullPath);
                 Console.WriteLine("Setting wallpaper silently: "+fullPath);
                 Wallpaper.SilentSet(fullPath);
