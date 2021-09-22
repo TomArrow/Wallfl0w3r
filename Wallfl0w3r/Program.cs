@@ -6,11 +6,25 @@ namespace Wallfl0w3r
 {
     class Program
     {
+
+        static WallpaperStyle style = WallpaperStyle.Fill;
+
         static void Main(string[] args)
         {
             Directory.CreateDirectory("images");
             ConfigParser config = new ConfigParser("config.ini");
             string watchFolder = config.GetValue("general", "watchFolder");
+            string wallpaperStyle = config.GetValue("general", "wallpaperStyle", "Fill");
+
+            try
+            {
+
+                style = Enum.Parse<WallpaperStyle>(wallpaperStyle, true);
+            } catch(Exception e)
+            {
+                Console.WriteLine("error parsing wallpaper style. Leaving at default Fill");
+                style = WallpaperStyle.Fill;
+            }
 
             FileSystemWatcher fsw = new FileSystemWatcher();
 
@@ -34,7 +48,7 @@ namespace Wallfl0w3r
                 System.Threading.Thread.Sleep(5000); // In case the image isn't fully written yet? Give it time.
                 string fullPath = Path.GetFullPath(e.FullPath);
                 Console.WriteLine("Setting wallpaper silently: "+fullPath);
-                Wallpaper.SilentSet(fullPath);
+                Wallpaper.SilentSet(fullPath,style);
             }
         }
     }
